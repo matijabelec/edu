@@ -51,4 +51,20 @@ class UserTable {
     public function deleteUser($id) {
         $this->tableGateway->delete(array('id' => (int)$id) );
     }
+    
+    public function authenticateUser(User $user) {
+        $username = $user->username;
+        $password = $user->password;
+        
+        $rowset = $this->tableGateway->select(array('username' => $username) );
+        $row = $rowset->current();
+        
+        if(!$row) {
+            throw new \Exception('Wrong username or password!');
+        }
+        
+        if($row->password != $password) {
+            throw new \Exception('Wrong username or password!');
+        }
+    }
 }

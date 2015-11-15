@@ -90,4 +90,51 @@ class User {
         
         return $this->inputFilter;
     }
+    
+    public function getAuthInputFilter() {
+        if(!$this->inputFilter) {
+            $inputFilter = new InputFilter();
+            
+            $inputFilter->add(array(
+                'name' => 'username',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name' => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min' => 1,
+                        ),
+                    ),
+                ),
+            ) );
+            
+            $inputFilter->add(array(
+                'name' => 'password',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name' => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min' => 1,
+                            'max' => 50,
+                        ),
+                    ),
+                ),
+            ) );
+            
+            $this->inputFilter = $inputFilter;
+        }
+        
+        return $this->inputFilter;
+    }
 }
