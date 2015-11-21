@@ -6,6 +6,9 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use User\Form\AuthForm;
 use User\Model\User;
+use Zend\Session\Config\StandardConfig;
+use Zend\Session\Container;
+use Zend\Session\SessionManager;
 
 class AuthController extends AbstractActionController {
     
@@ -20,33 +23,12 @@ class AuthController extends AbstractActionController {
     }
     
     public function loginAction() {
-        /*$db = $this->_getParam('db');
+        $container = new Container('user');
         
-        $loginForm = new AuthForm();
-        
-        if($loginForm->isValid($_POST)) {
-            $adapter = new Zend_Auth_Adapter_DbTable(
-                $db,
-                'users',
-                'username',
-                'password',
-                'MD5(CONCAT(?, password_salt) )'
-            );
-            
-            $adapter->setIdentity($loginForm->getValue('username') );
-            $adapter->setCredential($loginForm->getValue('password') );
-            
-            $auth   = Zend_Auth::getInstance();
-            $result = $auth->authenticate($adapter);
-            
-            if($result->isValid() ) {
-                $this->_helper->FlashMessenger('Successful Login');
-                $this->_redirect('/');
-                return;
-            }
-        }
-        
-        //$this->view->loginForm = $loginForm;*/
+        if(isset($container->username) )
+            $username = $container->username;
+        else
+            $username = null;
         
         $form = new AuthForm();
         
@@ -60,9 +42,24 @@ class AuthController extends AbstractActionController {
                 $data = $form->getData();
                 $data['password'] = md5($data['password']);
                 $user->exchangeArray($data);
+                
                 try {
+                    
                     $result = $this->getUserTable()->authenticateUser($user);
+                    
+                    if($result) {
+                        $config = new StandardConfig();
+                        $config->setOptions(array(
+                            'remember_me_seconds' => 1800,
+                            'name'                => 'user_session',
+                        ) );
+                        $manager = new SessionManager($config);
+
+                        $container = new Container('user');
+                        $container->username = $user->username;
+                    }
                 } catch (\Exception $e) {
+                    
                     //$form->setMessages();
                     return $this->redirect()->toRoute('auth', array('action' => 'login') );
                 }
@@ -73,6 +70,15 @@ class AuthController extends AbstractActionController {
         
         return array(
             'form' => $form,
+            'username' => $username,
         );
+    }
+    
+    public function logoutAction() {
+        
+        $container = new Container('user');
+        $container->getManager()->getStorage()->clear('user');
+        
+        return $this->redirect()->toRoute('auth', array('action' => 'login') );
     }
 }

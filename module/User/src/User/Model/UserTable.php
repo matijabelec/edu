@@ -66,5 +66,7 @@ class UserTable {
         if($row->password != $password) {
             throw new \Exception('Wrong username or password!');
         }
+        
+        return true;
     }
 }

@@ -8,6 +8,11 @@ $this->headTitle($title);
 
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<?php if($this->username) { ?>
+    <p><?php echo $this->username; ?></p>
+<?php } ?>
+
 <?php
 $form->setAttribute('action', $this->url('auth', array('action'=>'login') ) );
 $form->prepare();
