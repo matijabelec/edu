@@ -62,4 +62,12 @@ class Module
             ),
         );
     }
+    
+    public function getViewHelperConfig() {
+        return array(
+           'invokables' => array(
+              'authuser' => 'Application\View\Helper\AuthUser',
+           ),
+        );
+   }
 }

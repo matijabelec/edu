@@ -1,0 +1,11 @@
+<?php
+    $user = $this->authuser();
+?>
+
+<?php if(!$user) { ?>
+    <li><a href="<?php echo $this->url('auth', array('action'=>'login') ) ?>"><?php echo $this->translate('Login') ?></a></li>
+<?php } else { ?>
+    <li>
+        <a href="<?php echo $this->url('auth', array('action'=>'logout') ) ?>"><span><?php echo $user; ?></span> <?php echo $this->translate('Logout') ?></a>
+    </li>
+<?php } ?>
