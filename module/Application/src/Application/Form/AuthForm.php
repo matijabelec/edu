@@ -1,6 +1,6 @@
 <?php
 
-namespace User\Form;
+namespace Application\Form;
 
 use Zend\Form\Form;
 
@@ -30,21 +30,5 @@ class AuthForm extends Form {
                 'id' => 'submitbutton',
             ),
         ) );
-        
-//        $this->add('text', 'username', array(
-//            'label' => 'Username:',
-//            'required' => true,
-//            'filters'    => array('StringTrim'),
-//        ) );
-//        
-//        $this->add('password', 'password', array(
-//            'label' => 'Password:',
-//            'required' => true,
-//        ) );
-//        
-//        $this->add('submit', 'submit', array(
-//            'ignore'   => true,
-//            'label'    => 'Login',
-//        ) );
     }
 }

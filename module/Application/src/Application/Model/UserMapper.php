@@ -1,6 +1,6 @@
 <?php
 
-namespace User\Model;
+namespace Application\Model;
 
 use Zend\Db\Adapter\Adapter;
 use Checklist\Model\TaskEntity;

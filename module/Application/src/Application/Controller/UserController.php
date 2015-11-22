@@ -1,11 +1,11 @@
 <?php
 
-namespace User\Controller;
+namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use User\Model\User;
-use User\Form\UserForm;
+use Application\Model\User;
+use Application\Form\UserForm;
 
 class UserController extends AbstractActionController {
     
@@ -14,7 +14,7 @@ class UserController extends AbstractActionController {
     public function getUserTable() {
         if(!$this->userTable) {
             $sm = $this->getServiceLocator();
-            $this->userTable = $sm->get('User\Model\UserTable');
+            $this->userTable = $sm->get('Application\Model\UserTable');
         }
         return $this->userTable;
     }

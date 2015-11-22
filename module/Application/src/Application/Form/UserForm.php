@@ -1,6 +1,6 @@
 <?php
 
-namespace User\Form;
+namespace Application\Form;
 
 use Zend\Form\Form;
 

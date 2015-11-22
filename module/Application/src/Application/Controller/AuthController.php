@@ -1,11 +1,11 @@
 <?php
 
-namespace User\Controller;
+namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use User\Form\AuthForm;
-use User\Model\User;
+use Application\Form\AuthForm;
+use Application\Model\User;
 use Zend\Session\Config\StandardConfig;
 use Zend\Session\Container;
 use Zend\Session\SessionManager;
@@ -17,7 +17,7 @@ class AuthController extends AbstractActionController {
     public function getUserTable() {
         if(!$this->userTable) {
             $sm = $this->getServiceLocator();
-            $this->userTable = $sm->get('User\Model\UserTable');
+            $this->userTable = $sm->get('Application\Model\UserTable');
         }
         return $this->userTable;
     }
